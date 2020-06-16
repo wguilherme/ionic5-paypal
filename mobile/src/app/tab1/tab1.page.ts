@@ -8,9 +8,13 @@ import { PayPal, PayPalPayment, PayPalConfiguration, PayPalPaymentDetails } from
 })
 export class Tab1Page {
 
+  paymentAmount: string = '3.33';
+  currency: string = 'USD';
+  currencyIcon: string = '$';
+
   constructor(private payPal: PayPal) { }
 
-  comprar(){
+  payWithPaypal(){
     this.payPal.init({
       PayPalEnvironmentProduction: '',
       PayPalEnvironmentSandbox: 'ASrkk9Ob1cJFJTqhIkhe7PExQH6bZAfYZntlrrbE4LbVaw-5BqvOwyXaDuwepOwc3BO_7C2eC4gjkTKB'
@@ -25,8 +29,8 @@ export class Tab1Page {
         merchantUserAgreementURL: ''
 
       })).then(() => {
-        let detail = new PayPalPaymentDetails('19.99', '0.00', '0.00');
-        let payment = new PayPalPayment('19.99', 'USD', 'Default Ionic 5 Paypal', 'Sale', detail );
+        
+        let payment = new PayPalPayment(this.paymentAmount, this.currency, 'Description', 'Sale' );
         this.payPal.renderSinglePaymentUI(payment).then((response) => {
           console.log('pagamento efetuado');
         }, () => {
